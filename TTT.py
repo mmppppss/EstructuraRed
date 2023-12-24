@@ -60,18 +60,18 @@ class TTT:
             if(a.getInPos(0)==a.getInPos(1)==a.getInPos(2)):
                 if a.getInPos(0)==0: self.showWin("Gana O")
                 if a.getInPos(0)==1: self.showWin("Gana X")
-            x=red.getFil(0).getInPos(0)
-            y=red.getFil(1).getInPos(1)
-            z=red.getFil(2).getInPos(2)
-            if(x==y==z):
-                if x==0: self.showWin("Gana O")
-                if x==1: self.showWin("Gana X")
-            x=red.getFil(0).getInPos(2)
-            y=red.getFil(1).getInPos(1)
-            z=red.getFil(2).getInPos(0)
-            if(x==y==z):
-                if x==0: self.showWin("Gana O")
-                if x==1: self.showWin("Gana X")
+        x=red.getFil(0).getInPos(0)
+        y=red.getFil(1).getInPos(1)
+        z=red.getFil(2).getInPos(2)
+        if(x==y==z):
+            if x==0: self.showWin("Gana O")
+            if x==1: self.showWin("Gana X")
+        x=red.getFil(0).getInPos(2)
+        y=red.getFil(1).getInPos(1)
+        z=red.getFil(2).getInPos(0)
+        if(x==y==z):
+            if x==0: self.showWin("Gana O")
+            if x==1: self.showWin("Gana X")
         count=0
         for i in range(9):
             a=red.getXY(i%3, i//3)
