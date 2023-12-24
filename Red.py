@@ -21,10 +21,14 @@ class Red:
         for i in range(len(self.Lista)):
             aux.crearNodo(self.Lista[i].getInPos(nCol))
         return aux
-
+    def getFil(self, nFil:int):
+        aux=Lista()
+        for i in range(len(self.Lista)):
+            aux.crearNodo(self.Lista[nFil].getInPos(i))
+        return aux
     def setInXY(self, x:int, y:int, valor:int):
-        if(x-1 < len(self.Lista)):
-            self.Lista[x-1].setInPos(y, valor)
+        if(x < len(self.Lista)):
+            self.Lista[x].setInPos(y, valor)
         else:
             print("[RED] Posicion inexistente")
 

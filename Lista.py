@@ -38,7 +38,7 @@ class Lista:
             print("[LISTA] Posicion inexistente")
             return
         aux = self.Head
-        for _ in range(1, pos):
+        for _ in range(0, pos):
             aux = aux.getLink()
         aux.setValor(Data)
 
