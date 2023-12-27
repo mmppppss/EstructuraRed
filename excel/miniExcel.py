@@ -5,23 +5,18 @@ from tkinter import *
 class miniExcel:
     def __init__(self, cols:int, rows:int) -> None:
         #crea una matriz de 10x20
+        self.gui=Tk();
         self.celdas= [[Entry() for i in range(cols)] for j in range(rows)]
         self.cols = cols
         self.rows = rows
-        self.gui=Tk();
         self.gui.title("Mini Excel")
         self.gui.update()
         self.red=Red(rows)
         self.createRed();
         self.GUI()
-    def resize(self):
-        altura = self.gui.winfo_width()
-        anchura = self.gui.winfo_height()
-        self.createTable()
     def GUI(self):
         self.createTable()
         self.gui.update()
-        self.resize()
         self.gui.mainloop()
     def createTable(self):
         self.gui.update()
@@ -52,28 +47,41 @@ class miniExcel:
                 self.red.insertar(i,0)
         self.red.imprimirRed() 
     def loadData(self, row:int, col:int):
-            try:
-                data=int(self.celdas[row][col].get())
-                self.red.setInXY(row,col,data)
-            except:
-                func=self.celdas[row][col].get()
-                self.funcion(func, row, col)
+        data=self.celdas[row][col].get()
+        if(data.isnumeric()):
+            data=int(self.celdas[row][col].get())
+            self.red.setInXY(row,col,data)
             #self.red.imprimirRed()
+            self.mostrarRedEnExcel()
+        else:
+            func=self.celdas[row][col].get()
+            self.funcion(func, row, col)
+            #self.red.imprimirRed()
+    
     def funcion(self, func:str, rowTable:int, colTable:int):
+        #comprueba si es una cadena vacia
+        if not func.strip():
+            return
+        #if(func == "" or func == " "):return
         args=func.split("(")[1].split(")")[0].split(",")
         nums=[]
-        res=0
+        res=0.0
         #comprueba si el argumento es solo una letra
         for i in range(len(args)):
             if len(args[i])==1 and args[i].isalpha():
-                col=list(args[i])[0] #A,B,C etc
+                col=args[i] #A,B,C etc
                 col=ord(col)-ord('A')-32
-                list=self.red.getCol(col)
-                while list.cantNodos() > 0:
-                    nums.append(list.getInPos(0))
-                    list.imprimirLista()
-                    list=self.red.getCol(col)
-                print("es solo una letra")
+                lista=self.red.getCol(col)
+                for i in range(lista.cantNodos()):
+                    nums.append(lista.getInPos(i))
+                print(nums)
+                break
+            if len(args[i])==1 and args[i].isnumeric():
+                row=int(args[i]) #1,2,3 etc
+                lista=self.red.getFil(row-1)
+                for i in range(lista.cantNodos()):
+                    nums.append(lista.getInPos(i))
+                print(nums)
                 break
             col=list(args[i])[0] #A,B,C etc
             col=ord(col)-ord('A')-32
@@ -87,6 +95,9 @@ class miniExcel:
             res=min(nums)
         elif func.startswith("abs"):
             res=abs(sum(nums))
+        elif func.startswith("prom"):
+            res=sum(nums)/len(nums)
+
         self.red.setInXY(rowTable,colTable,res)
         self.mostrarRedEnExcel()
 
